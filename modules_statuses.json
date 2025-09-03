@@ -6,5 +6,6 @@
     "Payment": true,
     "Airport": true,
     "Company": true,
-    "Flight": true
+    "Flight": true,
+    "Booking": true
 }
