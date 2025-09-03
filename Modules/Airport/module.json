@@ -1,0 +1,11 @@
+{
+    "name": "Airport",
+    "alias": "airport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Airport\\Providers\\AirportServiceProvider"
+    ],
+    "files": []
+}

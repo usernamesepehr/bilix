@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/airport",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Airport\\": "app/",
+            "Modules\\Airport\\Database\\Factories\\": "database/factories/",
+            "Modules\\Airport\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Airport\\Tests\\": "tests/"
+        }
+    }
+}

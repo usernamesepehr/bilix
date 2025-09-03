@@ -1,3 +1,10 @@
 {
-    "User": true
+    "User": true,
+    "Auth": true,
+    "UserPanel": true,
+    "AdminPanel": true,
+    "Payment": true,
+    "Airport": true,
+    "Company": true,
+    "Flight": true
 }
