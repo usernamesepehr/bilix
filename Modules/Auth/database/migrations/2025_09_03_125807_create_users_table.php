@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('city');
-            $table->string('profile');
+            $table->string('profile')->nullable();
             $table->integer('melli')->nullable();
             $table->tinyInteger('role')->default(0);
             $table->foreignIdFor(Company::class)->nullable()->constrained()->cascadeOnDelete();
