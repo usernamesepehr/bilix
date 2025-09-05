@@ -3,8 +3,12 @@
 namespace Modules\Auth\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\Booking\Models\Book;
+use Modules\Company\Models\Company;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 // use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -51,6 +55,14 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
     }
 }
 
