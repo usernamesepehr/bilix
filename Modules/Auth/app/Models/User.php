@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Modules\Booking\Models\Book;
 use Modules\Company\Models\Company;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -26,7 +27,9 @@ class User extends Authenticatable implements JWTSubject
      * The attributes that are mass assignable.
      *
      * @var list<string>
+     *
      */
+    public $timestamps = false;
     protected $guarded = [];
     /**
      * The attributes that should be hidden for serialization.
@@ -63,6 +66,18 @@ class User extends Authenticatable implements JWTSubject
     public function books(): HasMany
     {
         return $this->hasMany(Book::class);
+    }
+    public static function createUser($request, $profilePath, $timestamp)
+    {
+        return self::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'city' => $request->city,
+            'profile' => $profilePath ? asset('storage/' . $profilePath) : null,
+            'created_at' => $timestamp
+        ]);
     }
 }
 

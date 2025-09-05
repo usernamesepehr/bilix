@@ -58,6 +58,21 @@ return [
             'ignore_exceptions' => false,
         ],
 
+
+        'login' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/auth/login.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
+        'logout' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/auth/logout.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
+
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
