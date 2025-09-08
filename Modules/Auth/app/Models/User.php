@@ -79,5 +79,9 @@ class User extends Authenticatable implements JWTSubject
             'created_at' => $timestamp
         ]);
     }
+    public static function getByEmail($email)
+    {
+        return self::where('email', $email)->first();
+    }
 }
 

@@ -41,26 +41,34 @@ class AuthController extends Controller
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
           return response()->json([], 401);
         }
-        $token = JWTAuth::claims([Auth::id()])->fromUser(Auth::user());
+        $token = JWTAuth::claims(['id' => Auth::id()])->fromUser(Auth::user());
 
-        Log::channel('login')->info('یوزر لاگین کرد!', [
-            'user_id' => auth::id(),
-            'email' => Auth::user()->phone,
-            'ip' => $request->ip(),
-        ]);
+        $this->logLogin();
 
         return response()->json(['token' => $token, 'type' => 'bearer']);
    }
    public function logout()
    {
          $payload = JWTAuth::parseToken()->getPayload();
-         $userId = $payload->get('sub');
+         $userId = $payload->get('id');
          $user = User::findOrFail($userId);
          JWTAuth::invalidate(JWTAuth::getToken());
-         Log::channel('logout')->info('یوزر خارج شد', [
+         $this->logLogout($user);
+   }
+   private function logLogin()
+   {
+        Log::channel('login')->info('یوزر لاگین کرد!', [
+            'user_id' => Auth::id(),
+            'email' => Auth::user()->email,
+            'ip' => request()->ip(),
+        ]);
+   }
+   private function logLogout($user)
+   {
+        Log::channel('logout')->info('یوزر خارج شد', [
             'user_id' => $user["id"],
             'phone' => $user->phone,
             'ip' => request()->ip()
-       ]);
+        ]);
    }
 }
