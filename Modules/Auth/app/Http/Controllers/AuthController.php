@@ -71,4 +71,5 @@ class AuthController extends Controller
             'ip' => request()->ip()
         ]);
    }
+   
 }

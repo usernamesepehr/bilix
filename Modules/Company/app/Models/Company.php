@@ -32,4 +32,8 @@ class Company extends Model
     {
         return $this->belongsToMany(Airport::class);
     }
+    public function getCreatedAtAttribute($value)
+    {
+        return jdate('Y F j', (int) $value);
+    }
 }

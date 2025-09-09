@@ -18,6 +18,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Auth\Database\Factories\UserFactory;
 
+
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -82,6 +83,10 @@ class User extends Authenticatable implements JWTSubject
     public static function getByEmail($email)
     {
         return self::where('email', $email)->first();
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return jdate('Y F j', (int) $value);
     }
 }
 

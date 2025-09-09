@@ -12,9 +12,9 @@
     "php": "^8.2",
     "laravel/framework": "^12.0",
     "laravel/tinker": "^2.10.1",
-    "nuwave/lighthouse": "^6.62",
     "nwidart/laravel-modules": "^12.0",
     "predis/predis": "^3.2",
+    "rebing/graphql-laravel": "^9.10",
     "tymon/jwt-auth": "^2.2"
   },
   "require-dev": {
@@ -39,7 +39,8 @@
       "Modules\\Company\\": "Modules/Company/App",
       "Modules\\Flight\\": "Modules/Flight/App",
       "Modules\\Booking\\": "Modules/Booking/App"
-    }
+    },
+    "files": ["app/Helpers/jdf.php"]
   },
   "autoload-dev": {
     "psr-4": {

@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\UserPanel\Http\Controllers\UserPanelController;
+use Rebing\GraphQL\GraphQLController;
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('userpanels', UserPanelController::class)->names('userpanel');
+Route::prefix('v1')->group(function () {
+    Route::post('/me', [GraphQLController::class, 'query'])->middleware('auth:api');
 });
+
+
