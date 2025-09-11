@@ -80,6 +80,10 @@ class User extends Authenticatable implements JWTSubject
             'created_at' => $timestamp
         ]);
     }
+    public static function updateUser($request, $userId)
+    {
+        self::where('id', $userId)->update($request->except('id', 'profile', 'role', 'company_id', 'created_at'));
+    }
     public static function getByEmail($email)
     {
         return self::where('email', $email)->first();
