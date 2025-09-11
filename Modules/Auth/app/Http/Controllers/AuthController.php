@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         $user = User::createUser($request, $profilePath, $timestamp);
 
-        $token = JWTAuth::claims([$user->id])->fromUser($user);
+        $token = JWTAuth::claims(['id' => $user->id])->fromUser($user);
 
         Mail::to($user->email)->send(new RegisterMail($user->name));
         return response()->json(['token' => $token, 'type' => 'bearer']);

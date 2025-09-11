@@ -35,7 +35,6 @@
       "Modules\\Auth\\": "Modules/Auth/App",
       "Modules\\UserPanel\\": "Modules/UserPanel/App",
       "Modules\\AdminPanel\\": "Modules/AdminPanel/App",
-      "Modules\\Airport\\": "Modules/Airport/App",
       "Modules\\Company\\": "Modules/Company/App",
       "Modules\\Flight\\": "Modules/Flight/App",
       "Modules\\Booking\\": "Modules/Booking/App"

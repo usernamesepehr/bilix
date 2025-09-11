@@ -32,9 +32,10 @@ class AdminLoginController extends Controller
         $roleMap = [
            0 => 'کاربر',
            1 => 'مدیر شرکت',
-           3 => 'مالک شرکت',
-           4 => 'ادمین',
-           5 => 'مالک'
+           2 => 'مالک شرکت',
+           3 => 'ادمین',
+           4 => 'مالک',
+           5 => 'پشتیبان'
         ];
         return $roleMap[$roleId];
     }

@@ -84,6 +84,10 @@ class User extends Authenticatable implements JWTSubject
     {
         self::where('id', $userId)->update($request->except('id', 'profile', 'role', 'company_id', 'created_at'));
     }
+    public static function getCompanyIdById($id)
+    {
+        return self::select('company_id')->where('id', $id)->firstOrFail()->company_id;
+    }
     public static function getByEmail($email)
     {
         return self::where('email', $email)->first();
