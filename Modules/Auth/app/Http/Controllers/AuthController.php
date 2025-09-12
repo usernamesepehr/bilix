@@ -11,6 +11,7 @@ use Modules\Auth\Emails\RegisterMail;
 use Modules\Auth\Http\Requests\LoginRequest;
 use Modules\Auth\Http\Requests\RegisterRequest;
 use Modules\Auth\Models\User;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -71,5 +72,16 @@ class AuthController extends Controller
             'ip' => request()->ip()
         ]);
    }
-   
+   public function refresh()
+   {
+     try {
+            $newToken = JWTAuth::refresh(JWTAuth::getToken());
+            return response()->json([
+                'token' => $newToken,
+                'type' => 'bearer'
+             ], 200);            
+        }catch (JWTException $e) {
+            return response()->json([], 401);
+        }
+   }
 }

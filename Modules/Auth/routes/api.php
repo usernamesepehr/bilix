@@ -9,6 +9,7 @@ Route::prefix('v1')->group(function() {
     Route::controller(AuthController::class)->group(function() {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
+        Route::get('/refresh', [Authcontroller::class, 'refresh']);
         Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
     });
     Route::prefix('otp')->group(function () {
