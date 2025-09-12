@@ -76,7 +76,7 @@ class User extends Authenticatable implements JWTSubject
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'city' => $request->city,
-            'profile' => $profilePath ? asset('storage/' . $profilePath) : null,
+            'profile' => $profilePath ? asset('/storage/' . $profilePath) : null,
             'created_at' => $timestamp
         ]);
     }
