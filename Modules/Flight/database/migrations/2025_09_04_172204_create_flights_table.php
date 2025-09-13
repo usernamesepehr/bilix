@@ -24,7 +24,8 @@ return new class extends Migration
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
             $table->string('slug');
             $table->string('date');
-            $table->string('duration');
+            $table->string('timeStart');
+            $table->string('timeEnd');
         });
     }
 

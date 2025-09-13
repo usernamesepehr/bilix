@@ -46,12 +46,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-        ];
-    }
+    
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -68,7 +63,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Book::class);
     }
-    public static function createUser($request, $profilePath, $timestamp)
+    public static function createUser($request, $profilePath, $timestamp, $role = 0, $companyId = null)
     {
         return self::create([
             'name' => $request->name,
@@ -77,6 +72,8 @@ class User extends Authenticatable implements JWTSubject
             'password' => Hash::make($request->password),
             'city' => $request->city,
             'profile' => $profilePath ? asset('/storage/' . $profilePath) : null,
+            'role' => $role,
+            'company_id' => $companyId,
             'created_at' => $timestamp
         ]);
     }
@@ -91,6 +88,18 @@ class User extends Authenticatable implements JWTSubject
     public static function getByEmail($email)
     {
         return self::where('email', $email)->first();
+    }
+    public static function getPersonnel($id, $companyId)
+    {
+        return self::where(['id' => $id, 'company_id' => $companyId])->firstOrFail();
+    }
+    public static function getPersonnels($companyId)
+    {
+        return self::select('id', 'name', 'phone', 'profile')->where('company_id', $companyId)->get();
+    }
+    public static function deletePersonnel($id, $companyId)
+    {
+        self::where(['id' => $id, 'company_id' => $companyId])->delete();
     }
     public function getCreatedAtAttribute($value)
     {
