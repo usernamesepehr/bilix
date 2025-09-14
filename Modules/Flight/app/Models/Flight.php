@@ -67,7 +67,5 @@ class Flight extends Model
 
     return $flight;
     }
-    protected $casts = [
-        'options_id' => 'array'
-    ];
+    
 }

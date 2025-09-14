@@ -25,4 +25,7 @@ class Flight_option extends Model
             'price' => $option->price,
         ]);
     }
+    protected $casts = [
+        'options_id' => 'array'
+    ];
 }
