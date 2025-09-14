@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->integer('registerNumber');
             $table->string('address');
-            $table->string('slug');
+            $table->string('slug')->unique()->nullable();
             $table->string('logo')->nullable();
             $table->string('created_at');
         });

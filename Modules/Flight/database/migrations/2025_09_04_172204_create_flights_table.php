@@ -18,11 +18,11 @@ return new class extends Migration
             $table->integer('load');
             $table->string('number');
             $table->string('plane');
-            $table->tinyInteger('discount');
+            $table->tinyInteger('discount')->nullable();
             $table->foreignId('origin_airport')->constrained('airports')->cascadeOnDelete();
             $table->foreignId('destination_airport')->constrained('airports')->cascadeOnDelete();
             $table->foreignIdFor(Company::class)->constrained()->cascadeOnDelete();
-            $table->string('slug');
+            $table->string('slug')->unique()->nullable();
             $table->string('date');
             $table->string('timeStart');
             $table->string('timeEnd');

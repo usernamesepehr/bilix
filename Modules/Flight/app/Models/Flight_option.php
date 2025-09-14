@@ -11,8 +11,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Flight_option extends Model
 {
     protected $guarded = [];
+    public $timestamps = false;
     public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
+    }
+    public static function createOption($option, $flightId)
+    {
+        self::create([
+            'flight_id' => $flightId,
+            'quantity' => $option->quantity,
+            'options_id' => json_encode($option->options_id),
+            'price' => $option->price,
+        ]);
     }
 }

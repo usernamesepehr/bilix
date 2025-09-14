@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('quantity');
             $table->foreignIdFor(Flight::class);
-            $table->string('options_id');
+            $table->json('options_id');
             $table->string('price');
         });
     }

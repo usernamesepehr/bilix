@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Booking\Models\Book_flight;
 use Modules\Company\Models\Airport;
+use Illuminate\Support\Str;
 use Modules\Company\Models\Company;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,8 @@ use Modules\Company\Models\Company;
 class Flight extends Model
 {
     protected $guarded = [];
+
+    public $timestamps = false;
 
    public function origin()
     {
@@ -41,4 +44,30 @@ class Flight extends Model
     {
         return $this->hasMany(Book_flight::class);
     }
+    public static function createFlight($request, $companyId)
+    {
+       $flight = self::create([
+        'load' => $request->load,
+        'number' => $request->number,
+        'plane' => $request->plane,
+        'discount' => $request->discount,
+        'origin_airport' => $request->origin_airport,
+        'destination_airport' => $request->destination_airport,
+        'company_id' => $companyId,
+        'slug' => $request->slug, 
+        'date' => $request->date,
+        'timeStart' => $request->timeStart,
+        'timeEnd' => $request->timeEnd
+        ]);
+    
+    if(empty($flight->slug)){
+        $flight->slug = Str::slug($flight->number . '-' . $flight->id); 
+        $flight->save();
+    }
+
+    return $flight;
+    }
+    protected $casts = [
+        'options_id' => 'array'
+    ];
 }

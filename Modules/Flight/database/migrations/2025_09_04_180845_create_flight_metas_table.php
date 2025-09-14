@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\Flight\Models\Flight;
 
 return new class extends Migration
 {
@@ -15,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('value');
+            $table->foreignIdFor(Flight::class)->constrained()->cascadeOnDelete();
         });
     }
 

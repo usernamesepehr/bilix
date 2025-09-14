@@ -4,53 +4,27 @@ namespace Modules\Flight\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Modules\Auth\Models\User;
+use Modules\Flight\Http\Requests\CreateFlightRequest;
+use Modules\Flight\Models\Flight;
+use Modules\Flight\Models\Flight_meta;
+use Modules\Flight\Models\Flight_option;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FlightController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function create(CreateFlightRequest $request)
     {
-        return view('flight::index');
+        $userId = JWTAuth::parseToken()->getPayload()->get('id');
+        $companyId = User::getCompanyIdById($userId);
+        DB::transaction(function() use ($request, $companyId) {
+            $flight = Flight::createFlight($request, $companyId);
+            Flight_meta::createMetas($flight);
+            foreach ($request->options as $option){
+                Flight_option::createOption((object) $option, $flight->id);
+            }
+        });
+        
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('flight::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('flight::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('flight::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
 }
