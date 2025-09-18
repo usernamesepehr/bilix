@@ -28,4 +28,12 @@ class Flight_option extends Model
     protected $casts = [
         'options_id' => 'array'
     ];
+    protected $appends = [
+        'option_objects'
+    ];
+    public function getOptionObjectsAttribute()
+    {
+        return Option::whereIn('id', $this->options_id)->get();
+    }
+
 }

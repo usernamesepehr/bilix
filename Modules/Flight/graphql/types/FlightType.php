@@ -10,9 +10,11 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 class FlightType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'company',
+        'name' => 'Flight',
         'model' => Flight::class
     ];
+
+    
 
     public function fields(): array
     {
@@ -29,7 +31,7 @@ class FlightType extends GraphQLType
             'date' => ['type' => Type::nonNull(Type::string())],
             'timeStart' => ['type' => Type::nonNull(Type::string())],
             'timeEnd' => ['type' => Type::nonNull(Type::string())],
-            'options' => ['type' => GraphQL::type('FlightOption')]
+            'FlightOptions' => ['type' => Type::listOf(GraphQL::type('FlightOption'))]
         ];
     }
 }

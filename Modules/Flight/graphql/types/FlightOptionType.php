@@ -18,9 +18,9 @@ class FlightOptionType extends GraphQLType
         return [
             'id' => ['type' => Type::nonNull(Type::int())],
             'quantity' => ['type' => Type::nonNull(Type::int())],
-            'option1' => ['type' => GraphQL::type('Option')],
-            'option2' => ['type' => GraphQL::type('Option')],
-            'price' => ['type' => Type::nonNull(Type::string())]
+            'options_id' => ['type' => Type::listOf(Type::int())],
+            'price' => ['type' => Type::nonNull(Type::string())],
+            'option_objects' => ['type' => Type::listOf(GraphQL::type('Option'))]
         ];
     }
 }

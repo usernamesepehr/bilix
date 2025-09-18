@@ -69,6 +69,7 @@ return [
         'default' => [
             'query' => [
                  Modules\UserPanel\GraphqL\Queries\MeQuery::class,
+                 Modules\Flight\graphql\Queries\FlightsQuery::class,
             ],
             'mutation' => [
                 // ExampleMutation::class,
@@ -76,7 +77,11 @@ return [
             // The types only available in this schema
             'types' => [
                 Modules\UserPanel\Graphql\Types\UserType::class,
-                Modules\Company\Graphql\Types\CompanyType::class
+                Modules\Company\Graphql\Types\CompanyType::class,
+                Modules\Flight\graphql\types\FlightType::class,
+                Modules\Flight\graphql\types\FlightOptionType::class,
+                Modules\Flight\graphql\types\OptionType::class,
+                Modules\Company\Graphql\Types\AirportType::class,
             ],
 
             // Laravel HTTP middleware

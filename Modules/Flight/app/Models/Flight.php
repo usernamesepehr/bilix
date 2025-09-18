@@ -32,7 +32,7 @@ class Flight extends Model
     {
         return $this->belongsTo(Company::class);
     }
-    public function options(): HasMany
+    public function FlightOptions(): HasMany
     {
         return $this->hasMany(Flight_option::class);
     }

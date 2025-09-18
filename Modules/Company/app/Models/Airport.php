@@ -14,8 +14,12 @@ class Airport extends Model
 
     protected $guarded = [];
 
-     public function companies(): BelongsToMany
+    public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class);
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return jdate('Y F j', (int) $value);
     }
 }
