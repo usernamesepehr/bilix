@@ -25,6 +25,15 @@ class FlightController extends Controller
                 Flight_option::createOption((object) $option, $flight->id);
             }
         });
-        
+    }
+    public function findOne($slug)
+    {
+        return Flight::findOneBySlug($slug);
+    }
+    public function delete($id)
+    {
+        $userId = JWTAuth::parseToken()->getPayload()->get('id');
+        $companyId = User::getCompanyIdById($userId);
+        return Flight::deleteFlight($id, $companyId);
     }
 }

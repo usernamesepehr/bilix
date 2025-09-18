@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Booking\Models\Book_flight;
 use Modules\Company\Models\Airport;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\In;
 use Modules\Company\Models\Company;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -67,5 +68,12 @@ class Flight extends Model
 
     return $flight;
     }
-    
+    public static function findOneBySlug($slug)
+    {
+        return static::where('slug', $slug)->with(['origin', 'destination', 'company', 'FlightOptions', 'metas'])->firstOrFail();
+    }
+    public static function deleteFlight(int $id, int $companyId): void
+    {
+        static::where(['id' => $id, 'company_id' => $companyId])->delete();
+    }
 }
