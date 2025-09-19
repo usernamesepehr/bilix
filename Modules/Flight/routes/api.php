@@ -14,8 +14,8 @@ Route::prefix('v1')->group(function() {
         Route::delete('/{id}', [FlightController::class, 'delete'])->middleware('role:companyOwner|companyAdmin');
         Route::put('/' , [FlightController::class, 'update'])->middleware('role:companyOwner|companyAdmin');
         Route::prefix('options')->group(function () {
-            Route::post('/', [FlightOptionController::class, 'create'])->middleware('role:companyOwner|companyAdmin');
-            Route::delete('/{id}', [FlightOptionController::class, 'delete'])->middleware('role:companyOwner|companyAdmin');
+            Route::post('/', [FlightOptionController::class, 'create']);
+            Route::delete('/{id}', [FlightOptionController::class, 'delete']);
         });
     });
 });

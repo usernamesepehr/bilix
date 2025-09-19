@@ -21,7 +21,7 @@ class Flight_option extends Model
         self::create([
             'flight_id' => $flightId,
             'quantity' => $option->quantity,
-            'options_id' => json_encode($option->options_id),
+            'options_id' => $option->options_id,
             'price' => $option->price,
         ]);
     }
@@ -35,5 +35,8 @@ class Flight_option extends Model
     {
         return Option::whereIn('id', $this->options_id)->get();
     }
-
+    public static function deleteOption($id): void
+    {
+        static::where('id' , $id)->delete();
+    }
 }
