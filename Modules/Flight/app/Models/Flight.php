@@ -76,4 +76,8 @@ class Flight extends Model
     {
         static::where(['id' => $id, 'company_id' => $companyId])->delete();
     }
+    public static function updateFlight($request, $companyId): void
+    {
+        static::where(['id' => $request->id, 'company_id' => $companyId])->update($request->except('id', 'company_id'));
+    }
 }

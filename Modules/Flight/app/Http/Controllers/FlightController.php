@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Auth\Models\User;
 use Modules\Flight\Http\Requests\CreateFlightRequest;
+use Modules\Flight\Http\Requests\UpdateFlightRequest;
 use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_meta;
 use Modules\Flight\Models\Flight_option;
@@ -35,5 +36,11 @@ class FlightController extends Controller
         $userId = JWTAuth::parseToken()->getPayload()->get('id');
         $companyId = User::getCompanyIdById($userId);
         return Flight::deleteFlight($id, $companyId);
+    }
+    public function update(UpdateFlightRequest $request)
+    {
+        $userId = JWTAuth::parseToken()->getPayload()->get('id');
+        $companyId = User::getCompanyIdById($userId);
+        Flight::updateFlight($request, $companyId);
     }
 }
