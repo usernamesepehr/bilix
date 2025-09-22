@@ -39,13 +39,6 @@ class FlightsQuery extends Query
     {
         $Flights = Flight::with(['origin', 'destination', 'company', 'FlightOptions'])->paginate($args['limit'], ['*'], 'page', $args['page']);
         
-        // $Flights->getCollection()->transform(function($Flight) {
-        //     $Flight->options->transform(function($FlightOption) {
-        //         $FlightOption->option_objects = Option::where('id', $FlightOption->options_id)->get();
-        //         return $FlightOption;
-        //     });
-        //     return $Flight;
-        // });
         return $Flights;
     }
 }

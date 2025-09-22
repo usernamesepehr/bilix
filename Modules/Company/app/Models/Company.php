@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Auth\Models\User;
+use Illuminate\Support\Str;
+
 
 // use Modules\Company\Database\Factories\CompanyFactory;
 
 class Company extends Model
 {
+    public $timestamps = false;
     // use HasFactory;
     protected $guarded = [];
     public $table = 'companies';
@@ -35,5 +38,28 @@ class Company extends Model
     public function getCreatedAtAttribute($value)
     {
         return jdate('Y F j', (int) $value);
+    }
+    public static function createCompany(mixed $request, string $timestamp, string $logoPath)
+    {
+        $company = static::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'registerNumber' => $request->registerNumber,
+            'address' => $request->address,
+            'slug' => $request->slug,
+            'logo' => $logoPath ? asset('/storage/' . $logoPath) : null,
+            'created_at' => $timestamp,
+        ]);
+
+        if(empty($company->slug)){
+        $company->slug = Str::slug($company->id . '-' . $company->name); 
+        $company->save();
+        return $company;
+    }
+
+    }
+    public static function updateCompany($request): void
+    {
+        self::where('id', $request->id)->update($request->except('id', 'slug', 'created_at', 'logo'));
     }
 }
