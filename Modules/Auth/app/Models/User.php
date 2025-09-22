@@ -63,7 +63,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Book::class);
     }
-    public static function createUser($request, $profilePath, $timestamp, $role = 0, $companyId = null)
+    public static function createUser(mixed $request, null|string $profilePath, string $timestamp, int $role = 0, null|int $companyId = null)
     {
         return self::create([
             'name' => $request->name,
