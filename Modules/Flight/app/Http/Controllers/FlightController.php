@@ -41,6 +41,10 @@ class FlightController extends Controller
         $companyId = User::getCompanyIdById($userId);
         return Flight::deleteFlight($id, $companyId);
     }
+    public function deleteByAdmin($id)
+    {
+        Flight::where('id', $id)->delete();
+    }
     public function update(UpdateFlightRequest $request)
     {
         $userId = JWTAuth::parseToken()->getPayload()->get('id');

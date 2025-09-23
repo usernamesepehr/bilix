@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Company\Models\Rate;
 use Modules\Flight\Http\Controllers\FlightController;
 use Modules\Flight\Http\Controllers\FlightOptionController;
 use Rebing\GraphQL\GraphQLController;
 
 Route::prefix('v1')->group(function() {
+    Route::delete('/admin/flights/{id}', [FlightController::class, 'deleteByAdmin'])->middleware('role:admin|owner');
     Route::prefix('flights')->group(function() {
         Route::post('/', [FlightController::class, 'create'])->middleware('role:companyOwner|companyAdmin');
         Route::post('/excel', [FlightController::class, 'createExcel'])->middleware('role:companyOwner|companyAdmin');
