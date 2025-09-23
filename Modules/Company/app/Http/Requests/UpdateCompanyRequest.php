@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\AdminPanel\Http\Requests;
+namespace Modules\Company\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -10,7 +10,6 @@ class UpdateCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:companies,id',
             'name' => 'sometimes|string|max:255',
             'description' => 'sometimes|string|max:255',
             'registerNumber' => 'sometimes|integer',
@@ -26,11 +25,7 @@ class UpdateCompanyRequest extends FormRequest
     public function messages(): array
     {
         return [
-    'id.required' => 'شناسه شرکت الزامی است.',
-    'id.integer'  => 'شناسه شرکت باید یک عدد صحیح باشد.',
-    'id.exists'   => 'شرکتی با این شناسه یافت نشد.',
-
-    'name.string' => 'نام باید متن باشد.',
+                'name.string' => 'نام باید متن باشد.',
     'name.max' => 'نام نمی‌تواند بیش از ۲۵۵ کاراکتر باشد.',
 
     'description.string' => 'توضیحات باید متن باشد.',

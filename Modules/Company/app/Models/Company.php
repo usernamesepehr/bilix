@@ -58,8 +58,8 @@ class Company extends Model
     }
 
     }
-    public static function updateCompany($request): void
+    public static function updateCompany($request, $id): void
     {
-        self::where('id', $request->id)->update($request->except('id', 'slug', 'created_at', 'logo'));
+        self::where('id', $id)->update($request->except('id', 'slug', 'created_at', 'logo'));
     }
 }

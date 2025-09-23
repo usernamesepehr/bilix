@@ -5,9 +5,14 @@ use Modules\Company\Http\Controllers\AirportController;
 use Modules\Company\Http\Controllers\CertificateController;
 use Modules\Company\Http\Controllers\CompanyController;
 use Modules\Company\Http\Controllers\PersonnelController;
+use Predis\Configuration\Option\Prefix;
 
 Route::prefix('v1')->group(function() {
     Route::prefix('company')->group(function() {
+        Route::prefix('me')->group(function () {
+            Route::get('/', [CompanyController::class, 'get'])->middleware('role:companyAdmin|companyOwner');
+            Route::put('/', [CompanyController::class, 'update'])->middleware('role:companyAdmin|companyOwner');
+        });
         Route::prefix('airports')->group(function() {
             Route::post('/{airportId}', [AirportController::class, 'create'])->middleware('role:companyAdmin|companyOwner');
             Route::get('/', [AirportController::class, 'findAll'])->middleware('role:companyAdmin|companyOwner');

@@ -36,7 +36,7 @@ class CompanyController extends Controller
         if(!empty($request->file('logo'))){
             $this->updateLogo($request->logo, $request->id);
         }
-        Company::updateCompany($request);
+        Company::updateCompany($request, $request->id);
     }
     private function updateLogo($logo, $id)
     {
