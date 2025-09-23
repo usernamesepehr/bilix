@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\UserPanel\Http\Controllers\UpdateMeController;
-use Modules\UserPanel\Http\Controllers\UserPanelController;
 use Rebing\GraphQL\GraphQLController;
 
 Route::prefix('v1')->group(function () {

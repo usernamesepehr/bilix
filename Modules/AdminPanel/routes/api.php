@@ -18,6 +18,7 @@ Route::prefix('v1')->group(function() {
         Route::get('/', [UserController::class, 'findAll'])->middleware('role:admin|owner');
         Route::get('/{id}', [UserController::class, 'findOne'])->middleware('role:admin|owner');
         Route::delete('/{id}', [UserController::class, 'delete'])->middleware('role:admin|owner');
+        Route::put('/', [UserController::class, 'update'])->middleware('role:owner|admin');
        });
        Route::prefix('airports')->group(function() {
         Route::post('/', [AirportController::class, 'create'])->middleware('role:admin|owner');

@@ -4,6 +4,7 @@ namespace Modules\AdminPanel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Modules\AdminPanel\Http\Requests\CreateUserRequest;
 use Modules\AdminPanel\Http\Requests\UpdateUserRequest;
 use Modules\Auth\Models\User;
@@ -47,14 +48,26 @@ class UserController extends Controller
    }
    public function update(UpdateUserRequest $request)
    {
-
+      $data = $request->validated();
+      if ($request->profile) $this->updateProfile($request->profile, $request->id);
+      $data['role'] = $this->mapStrRoleToRoleId($data['role']);
+      User::updateUserByAdmin($data, $request->id);
+   }
+   private function  updateProfile($profile, $userId)
+   {
+    $user = User::findOrFail($userId);
+        $path = str_replace('/storage/', '', parse_url($user->profile, PHP_URL_PATH));
+        Storage::disk('public')->delete($path);
+        $profilePath = $profile->store('profiles', 'public');
+        $user->profile = asset('storage/' . $profilePath);
+        $user->save();
    }
    public function findOne($id)
-{
-    $user = User::with('company')->findOrFail($id);
-    $user->role = $this->mapRoleIdToStrRole($user->role);
-    return response()->json(['user' => $user]);
-}
+   {
+      $user = User::with('company')->findOrFail($id);
+      $user->role = $this->mapRoleIdToStrRole($user->role);
+      return response()->json(['user' => $user]);
+   }
 
    public function findAll()
    {

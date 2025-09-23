@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Modules\Booking\Models\Book;
 use Modules\Company\Models\Company;
@@ -80,6 +81,10 @@ class User extends Authenticatable implements JWTSubject
     public static function updateUser($request, $userId)
     {
         self::where('id', $userId)->update($request->except('id', 'profile', 'role', 'company_id', 'created_at'));
+    }
+    public static function updateUserByAdmin($data, $userId)
+    {
+        static::where('id', $userId)->update(Arr::except($data, ['id', 'profile', 'created_at']));
     }
     public static function getCompanyIdById($id)
     {
