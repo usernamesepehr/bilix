@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   postgres:
@@ -15,11 +15,30 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   redis:
-    image: redis:8.2
+    image: redis:latest
     container_name: bilix_redis
     restart: always
     ports: 
       - "6379:6379"
 
+  elasticsearch:
+    image: elasticsearch:8.15.0
+    container_name: bilix_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false   # disable security for dev
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    
+
 volumes:
   postgres_data:
+  es_data:
