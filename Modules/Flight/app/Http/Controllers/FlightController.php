@@ -10,10 +10,12 @@ use Modules\Auth\Models\User;
 use Modules\Flight\Http\Requests\CreateFlightByExcelRequest;
 use Modules\Flight\Http\Requests\CreateFlightRequest;
 use Modules\Flight\Http\Requests\UpdateFlightRequest;
+use Modules\Flight\Http\Requests\UpdateMultipleRequest;
 use Modules\Flight\Imports\FlightImport;
 use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_meta;
 use Modules\Flight\Models\Flight_option;
+use Modules\Flight\Services\FilterService;
 use Modules\Flight\Services\ValidateAndCreateFlightService;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -57,4 +59,30 @@ class FlightController extends Controller
         $companyId = User::getCompanyIdById($userId);
         Excel::import(new FlightImport($companyId, $service), $request->file('file'));
     }
-}
+    public function findByFilter(Request $request, FilterService $filterService)
+    {
+        $flights = $filterService->apply(Flight::query()->with('FlightOptions'))->paginate($request->input('per_page' ?? 10));
+        return response()->json($flights);
+    }
+    public function updateMultiple(UpdateMultipleRequest $request)
+    {
+        $userId = JWTAuth::parseToken()->getPayload()->get('id');
+        $userRole = JWTAuth::parseToken()->getPayload()->get('role');
+        DB::beginTransaction();
+        try{
+         $query = Flight::whereIn('id', $request->ids);
+        if (!in_array($userRole, [3, 4])) {
+            $companyId = User::getCompanyIdById($userId);
+            $query->where('company_id', $companyId);
+        }
+        $query->update($request->except('ids', 'company_id', 'slug'));
+        DB::commit();
+        }catch(\Exception $e) {
+            dd($e->getMessage());
+        DB::rollBack();
+        return response()->json([], 422);   
+        }
+        } 
+    }
+
+
