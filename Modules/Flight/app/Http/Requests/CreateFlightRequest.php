@@ -10,7 +10,7 @@ class CreateFlightRequest extends FormRequest
     {
         return [
             'load' => 'required|integer|min:1',
-            'number' => 'required|string|max:50',
+            'number' => 'required|string|max:50|unique:flights,number',
             'plane' => 'required|string|max:100',
             'discount' => 'sometimes|integer|between:0,100',
             'origin_airport' =>'required|exists:airports,id',
@@ -40,6 +40,7 @@ class CreateFlightRequest extends FormRequest
     'number.required' => 'شماره پرواز الزامی است.',
     'number.string' => 'شماره پرواز باید رشته‌ای باشد.',
     'number.max' => 'شماره پرواز نمی‌تواند بیش از :max کاراکتر باشد.',
+    'number.unique'    => 'این شماره پرواز قبلاً ثبت شده است.',
 
     'plane.required' => 'نام هواپیما الزامی است.',
     'plane.string' => 'نام هواپیما باید رشته‌ای باشد.',
