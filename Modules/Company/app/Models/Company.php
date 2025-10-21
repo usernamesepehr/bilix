@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Auth\Models\User;
 use Illuminate\Support\Str;
+use PDPhilip\ElasticLens\Indexable;
 
 
 // use Modules\Company\Database\Factories\CompanyFactory;
 
 class Company extends Model
 {
+    use Indexable;
     public $timestamps = false;
     // use HasFactory;
     protected $guarded = [];
