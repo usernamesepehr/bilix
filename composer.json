@@ -15,6 +15,7 @@
     "laravel/tinker": "^2.10.1",
     "maatwebsite/excel": "3.1.67",
     "nwidart/laravel-modules": "^12.0",
+    "pdphilip/elasticlens": "^3.1",
     "pdphilip/elasticsearch": "^5.1",
     "predis/predis": "^3.2",
     "rebing/graphql-laravel": "^9.10",
@@ -35,12 +36,12 @@
       "Database\\Factories\\": "database/factories/",
       "Database\\Seeders\\": "database/seeders/",
       "Modules\\": "Modules/",
-      "Modules\\Auth\\": "Modules/Auth/App",
-      "Modules\\UserPanel\\": "Modules/UserPanel/App",
-      "Modules\\AdminPanel\\": "Modules/AdminPanel/App",
-      "Modules\\Company\\": "Modules/Company/App",
-      "Modules\\Flight\\": "Modules/Flight/App",
-      "Modules\\Booking\\": "Modules/Booking/App"
+      "Modules\\Auth\\": "Modules/Auth/app",
+      "Modules\\UserPanel\\": "Modules/UserPanel/app",
+      "Modules\\AdminPanel\\": "Modules/AdminPanel/app",
+      "Modules\\Company\\": "Modules/Company/app",
+      "Modules\\Flight\\": "Modules/Flight/app",
+      "Modules\\Booking\\": "Modules/Booking/app"
     },
     "files": ["app/Helpers/jdf.php"]
   },
