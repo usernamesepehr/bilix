@@ -3,6 +3,7 @@
 namespace Modules\Company\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Modules\Auth\Models\User;
@@ -27,10 +28,17 @@ class CompanyController extends Controller
         $company->logo = asset('/storage/' . $path);
         $company->save();
     }
-    public function get()
+    public function get(): JsonResponse
     {
         $userId = JWTAuth::parseToken()->getPayload()->get('id');
         $companyId = User::getCompanyIdById($userId);
-        Company::findOrFail($companyId);
+        $company = Company::findOrFail($companyId);
+        return response()->json($company);
+    }
+    public function search(): JsonResponse        
+    {
+        $perPage = request()->input('per_page');
+        $companies =  Company::viaIndex()->searchTerm(request()->input('q'))->paginate($perPage);
+        return response()->json($companies);
     }
 }

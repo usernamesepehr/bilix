@@ -3,28 +3,30 @@
 return [
     'database' => 'elasticsearch',
 
-    'queue' => null, // Set queue to use for dispatching index builds, ex: default, high, low, etc.
+    'queue' => 'default', // Set to 'default' to enable queuing for index builds (null disables queuing)
 
     'watchers' => [
-        //        \App\Models\Profile::class => [
-        //            \App\Models\Indexes\IndexedUser::class,
-        //        ],
+        \Modules\Company\Models\Company::class => [
+            \Modules\Company\Models\Indexes\IndexedCompany::class,
+        ],
     ],
 
     'index_build_state' => [
-        'enabled' => true, // Recommended to keep this enabled
-        'log_trim' => 2, // If null, the logs field will be empty
+        'enabled' => true,
+        'log_trim' => 2,
     ],
 
     'index_migration_logs' => [
-        'enabled' => true, // Recommended to keep this enabled
+        'enabled' => true,
     ],
+
     'namespaces' => [
         'App\Models' => 'App\Models\Indexes',
+        'Modules\Company\Models' => 'Modules\Company\Models\Indexes', // Use backslashes, match exact namespace
     ],
 
     'index_paths' => [
         'app/Models/Indexes/' => 'App\Models\Indexes',
+        'Modules/Company/Models/Indexes/' => 'Modules\Company\Models\Indexes', // Add your module's index path
     ],
-
 ];

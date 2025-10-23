@@ -16,6 +16,8 @@ use PDPhilip\ElasticLens\Indexable;
 class Company extends Model
 {
     use Indexable;
+
+    public static $searchableIndex = "name";
     public $timestamps = false;
     // use HasFactory;
     protected $guarded = [];
