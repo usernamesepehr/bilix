@@ -7,5 +7,6 @@
     "Airport": true,
     "Company": true,
     "Flight": true,
-    "Booking": true
+    "Booking": true,
+    "Support": true
 }

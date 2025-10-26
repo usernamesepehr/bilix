@@ -41,7 +41,9 @@
       "Modules\\AdminPanel\\": "Modules/AdminPanel/app",
       "Modules\\Company\\": "Modules/Company/app",
       "Modules\\Flight\\": "Modules/Flight/app",
-      "Modules\\Booking\\": "Modules/Booking/app"
+      "Modules\\Booking\\": "Modules/Booking/app",
+      "Modules\\Support\\": "Modules/Support/app"
+
     },
     "files": ["app/Helpers/jdf.php"]
   },
