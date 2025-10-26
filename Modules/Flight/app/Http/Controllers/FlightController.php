@@ -12,6 +12,7 @@ use Modules\Flight\Http\Requests\CreateFlightRequest;
 use Modules\Flight\Http\Requests\UpdateFlightRequest;
 use Modules\Flight\Http\Requests\UpdateMultipleRequest;
 use Modules\Flight\Imports\FlightImport;
+use Modules\Flight\Imports\FlightMultiSheetImport;
 use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_meta;
 use Modules\Flight\Models\Flight_option;
@@ -53,11 +54,11 @@ class FlightController extends Controller
         $companyId = User::getCompanyIdById($userId);
         Flight::updateFlight($request, $companyId);
     }
-    public function createExcel(CreateFlightByExcelRequest $request, ValidateAndCreateFlightService $service)
+    public function createExcel(CreateFlightByExcelRequest $request)
     {
         $userId = JWTAuth::parseToken()->getPayload()->get('id');
         $companyId = User::getCompanyIdById($userId);
-        Excel::import(new FlightImport($companyId, $service), $request->file('file'));
+        Excel::import(new FlightMultiSheetImport ($companyId), $request->file('file'));
     }
     public function findByFilter(Request $request, FilterService $filterService)
     {
