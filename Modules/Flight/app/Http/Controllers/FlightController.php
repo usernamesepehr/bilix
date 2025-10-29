@@ -11,13 +11,11 @@ use Modules\Flight\Http\Requests\CreateFlightByExcelRequest;
 use Modules\Flight\Http\Requests\CreateFlightRequest;
 use Modules\Flight\Http\Requests\UpdateFlightRequest;
 use Modules\Flight\Http\Requests\UpdateMultipleRequest;
-use Modules\Flight\Imports\FlightImport;
 use Modules\Flight\Imports\FlightMultiSheetImport;
 use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_meta;
 use Modules\Flight\Models\Flight_option;
 use Modules\Flight\Services\FilterService;
-use Modules\Flight\Services\ValidateAndCreateFlightService;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FlightController extends Controller
