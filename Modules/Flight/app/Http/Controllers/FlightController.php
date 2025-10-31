@@ -56,7 +56,7 @@ class FlightController extends Controller
     {
         $userId = JWTAuth::parseToken()->getPayload()->get('id');
         $companyId = User::getCompanyIdById($userId);
-        Excel::import(new FlightMultiSheetImport ($companyId), $request->file('file'));
+        Excel::import(new FlightMultiSheetImport, $request->file('file'));
     }
     public function findByFilter(Request $request, FilterService $filterService)
     {
