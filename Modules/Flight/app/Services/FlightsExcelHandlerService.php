@@ -9,7 +9,7 @@ use Modules\Flight\Models\Flight_meta;
 
 class FlightsExcelHandlerService extends ExcelHandlerService {
 
-     protected $rules =[
+     protected static $rules =[
          '1' => 'required|integer|min:1',
          '2' => 'required|string|max:50|unique:flights,number',
          '3' => 'required|string|max:100',
@@ -21,7 +21,7 @@ class FlightsExcelHandlerService extends ExcelHandlerService {
          '9' => 'required|string|regex:/^\d{2}:\d{2}$/',
          '10' => 'required|string|regex:/^\d{2}:\d{2}$/',
      ];
-     protected $messages =[
+     protected static $messages =[
                     '1.required' => 'ظرفیت پرواز الزامی است.',
     '1.integer' => 'ظرفیت پرواز باید عددی باشد.',
     '1.min' => 'ظرفیت پرواز باید حداقل :min باشد.',
@@ -65,7 +65,7 @@ class FlightsExcelHandlerService extends ExcelHandlerService {
         $validator = Validator::make($data, self::$rules, self::$messages);
 
         if ($validator->fails()) {
-           return ['sheet' => 'flights', 'errors' => $validator->errors()];
+           return ['errors' => $validator->errors()];
         } 
 
         return new self($validator->validated());

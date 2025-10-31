@@ -7,14 +7,14 @@ use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_option;
 
 class OptionsExcelHandlerService extends ExcelHandlerService {
-     protected $rules =[
+     protected static $rules =[
          '1' => 'required|integer|min:1',
          '2' => 'required|string|exists:flights,number',
          '3' => 'required|array',
          '3.*' => 'exists:options,id', 
          '4' => 'required|string',
      ];
-     protected $messages = [
+     protected static $messages = [
       '1.required' => 'تعداد برای هر گزینه الزامی است.',
       '1.integer' => 'تعداد باید عدد صحیح باشد.',
       '1.min' => 'تعداد باید حداقل 1 باشد.',

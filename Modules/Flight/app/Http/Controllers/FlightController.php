@@ -3,9 +3,11 @@
 namespace Modules\Flight\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use Modules\Auth\Models\User;
 use Modules\Flight\Http\Requests\CreateFlightByExcelRequest;
 use Modules\Flight\Http\Requests\CreateFlightRequest;
@@ -56,7 +58,18 @@ class FlightController extends Controller
     {
         $userId = JWTAuth::parseToken()->getPayload()->get('id');
         $companyId = User::getCompanyIdById($userId);
-        Excel::import(new FlightMultiSheetImport, $request->file('file'));
+        try {
+        Excel::import(new FlightMultiSheetImport($companyId), $request->file('file'));
+
+        } catch (ValidationException $e) {
+        $errors = collect($e->failures())->map(fn($f) => [
+            'sheet' => $f->sheet(),
+            'row' => $f->row(),
+            'errors' => $f->errors()
+        ])->all();
+
+        return response()->json(['errors' => $errors], 422);
+        }
     }
     public function findByFilter(Request $request, FilterService $filterService)
     {
