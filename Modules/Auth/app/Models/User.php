@@ -2,7 +2,7 @@
 
 namespace Modules\Auth\Models;
 
-use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,6 +11,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Modules\Booking\Models\Book;
 use Modules\Company\Models\Company;
+use Modules\Support\Models\Chat;
+use Modules\Support\Models\Message;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 // use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -63,6 +65,16 @@ class User extends Authenticatable implements JWTSubject
     public function books(): HasMany
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function chat(): HasMany
+    {
+        return $this->hasMany(Chat::class);
     }
     public static function createUser(mixed $request, null|string $profilePath, string $timestamp, int $role = 0, null|int $companyId = null)
     {

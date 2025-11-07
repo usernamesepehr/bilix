@@ -15,6 +15,11 @@ class Message extends Model
 
    public $timestamps = false;
 
+   public function chat(): BelongsTo
+   {
+      return $this->belongsTo(Chat::class);
+   }
+
    public function sender(): BelongsTo
    {
       return $this->belongsTo(User::class, "sender_id");
