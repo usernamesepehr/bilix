@@ -5,8 +5,12 @@ use Modules\UserPanel\Http\Controllers\UpdateMeController;
 use Rebing\GraphQL\GraphQLController;
 
 Route::prefix('v1')->group(function () {
+  Route::middleware('throttle:10,1')->group(function () {  
+
     Route::get('/me', [GraphQLController::class, 'query'])->middleware('auth:api');
     Route::post('/me', UpdateMeController::class)->middleware('auth:api');
+
+  });  
 });
 
 

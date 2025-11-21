@@ -6,6 +6,7 @@ use Modules\Auth\Http\Controllers\AuthController;
 use Modules\Auth\Http\Controllers\OtpController;
 
 Route::prefix('v1')->group(function() {
+  Route::middleware('throttle:10,1')->group(function () {  
     Route::controller(AuthController::class)->group(function() {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
@@ -17,4 +18,5 @@ Route::prefix('v1')->group(function() {
         Route::post('/', [OtpController::class, 'check'])->name('otp-check');
     });
     Route::post('/login/admin', [AdminLoginController::class, 'login'])->middleware('auth:api');
+  });
 });

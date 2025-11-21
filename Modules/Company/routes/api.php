@@ -8,6 +8,8 @@ use Modules\Company\Http\Controllers\PersonnelController;
 use Predis\Configuration\Option\Prefix;
 
 Route::prefix('v1')->group(function() {
+  Route::middleware('throttle:10,1')->group(function () {  
+
     Route::prefix('company')->group(function() {
         Route::get('/search', [CompanyController::class , 'search']);
         Route::prefix('me')->group(function () {
@@ -31,4 +33,5 @@ Route::prefix('v1')->group(function() {
             Route::delete('/{id}', [PersonnelController::class, 'delete'])->middleware('role:companyOwner'); 
         });
     });
+  });  
 });
