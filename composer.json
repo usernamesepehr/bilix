@@ -36,13 +36,11 @@
       "Database\\Factories\\": "database/factories/",
       "Database\\Seeders\\": "database/seeders/",
       "Modules\\": "Modules/",
-      "Modules\\Auth\\": "Modules/Auth/app",
-      "Modules\\UserPanel\\": "Modules/UserPanel/app",
-      "Modules\\AdminPanel\\": "Modules/AdminPanel/app",
       "Modules\\Company\\": "Modules/Company/app",
       "Modules\\Flight\\": "Modules/Flight/app",
-      "Modules\\Booking\\": "Modules/Booking/app",
-      "Modules\\Support\\": "Modules/Support/app"
+      "Modules\\Support\\": "Modules/Support/app",
+      "Modules\\User\\": "Modules/User/app",
+      "Modules\\Book\\": "Modules/Book/app"
 
     },
     "files": ["app/Helpers/jdf.php"]

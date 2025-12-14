@@ -8,5 +8,6 @@
     "Company": true,
     "Flight": true,
     "Booking": true,
-    "Support": true
+    "Support": true,
+    "Book": true
 }
