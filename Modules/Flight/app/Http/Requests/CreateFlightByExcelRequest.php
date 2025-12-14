@@ -12,7 +12,7 @@ class CreateFlightByExcelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|mimes:csv|max:2048'
+            'file' => 'required|mimes:csv,xlsx|max:2048'
         ];
     }
 
@@ -27,7 +27,7 @@ class CreateFlightByExcelRequest extends FormRequest
     {
         return [
             'file.required' => 'لطفاً یک فایل انتخاب کنید.',
-            'file.mimes'    => 'فرمت فایل باید اکسل   CSV باشد.',
+            'file.mimes'    => 'فرمت فایل باید اکسل CSV یا xlsx باشد.',
             'file.max'      => 'حجم فایل نباید بیشتر از ۲ مگابایت باشد.',
         ];
     }

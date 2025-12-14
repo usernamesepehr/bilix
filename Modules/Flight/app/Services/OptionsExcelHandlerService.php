@@ -7,29 +7,36 @@ use Modules\Flight\Models\Flight;
 use Modules\Flight\Models\Flight_option;
 
 class OptionsExcelHandlerService extends ExcelHandlerService {
-     protected static $rules =[
-         '1' => 'required|integer|min:1',
-         '2' => 'required|string|exists:flights,number',
-         '3' => 'required|array',
-         '3.*' => 'exists:options,id', 
-         '4' => 'required|string',
+     protected static function rules(): array
+     {
+     return [
+         'quantity' => 'required|integer|min:1',
+         'number' => 'required|string|exists:flights,number',
+         'options_id' => 'required|array',
+         'options_id.*' => 'exists:options,id', 
+         'price' => 'required|string',
      ];
-     protected static $messages = [
-      '1.required' => 'تعداد برای هر گزینه الزامی است.',
-      '1.integer' => 'تعداد باید عدد صحیح باشد.',
-      '1.min' => 'تعداد باید حداقل 1 باشد.',
-      '2.required' => 'وارد کردن شماره پرواز الزامی است',
-      '2.string' => 'شماره پرواز باید از نوع رشته ای باشد ',
-      '3.exists' => 'شماره پرواز وارد شده معتبر نیست',
-      '3.required' => 'شناسه گزینه‌ها برای هر گزینه الزامی است.',
-      '3.array' => 'شناسه گزینه‌ها باید آرایه باشد.',
-      '3.*.exists' => 'یکی از گزینه‌های انتخاب شده معتبر نیست.',
-      '4.required' => 'قیمت برای هر گزینه الزامی است.',
-      '4.string' => 'قیمت باید رشته باشد.',
+    }
+     protected static function messages(): array
+     {
+     return [
+      'quantity.required' => 'تعداد برای هر گزینه الزامی است.',
+      'quantity.integer' => 'تعداد باید عدد صحیح باشد.',
+      'quantity.min' => 'تعداد باید حداقل 1 باشد.',
+      'number.required' => 'وارد کردن شماره پرواز الزامی است',
+      'number.string' => 'شماره پرواز باید از نوع رشته ای باشد ',
+      'number' => 'شماره پرواز مورد نظر معتبر نیست',
+      'number.exists' => 'شماره پرواز وارد شده معتبر نیست',
+      'options_id.required' => 'شناسه گزینه‌ها برای هر گزینه الزامی است.',
+      'options_id.array' => 'شناسه گزینه‌ها باید آرایه باشد.',
+      'options_id.*.exists' => 'یکی از گزینه‌های انتخاب شده معتبر نیست.',
+      'price.required' => 'قیمت برای هر گزینه الزامی است.',
+      'price.string' => 'قیمت باید رشته باشد.',
      ];
+     }
      public static function Validator($data): array|ExcelHandlerService
      {
-        $validator = Validator::make($data, self::$rules, self::$messages);
+        $validator = Validator::make($data["\x00*\x00items"], self::rules(), self::messages());
         
         if ($validator->fails()) {
          return ['sheet' => 'options', 'errors' => $validator->errors()];
@@ -40,13 +47,16 @@ class OptionsExcelHandlerService extends ExcelHandlerService {
 
      public static function Create(ExcelHandlerService $excelHandlerService, ...$args): void
      {
-         $flightId = Flight::select('id')->where('number', $excelHandlerService->validated[2])->firstOrFail();
-
+         $flightId = Flight::select('id')->where('number', $excelHandlerService->validated[2])->first();
+         if($flightId) {
+             
          Flight_option::create([
-            'flight_id' => $flightId,
-            'quantity' => $excelHandlerService->validated[1],
-            'options_id' => $excelHandlerService->validated[3],
-            'price' => $excelHandlerService->validated[4],
+            'number' => $flightId,
+            'quantity' => $excelHandlerService->validated['quantity'],
+            'options_id' => $excelHandlerService->validated['options_id'],
+            'price' => $excelHandlerService->validated['price'],
         ]);
+         }
+
      }
 }

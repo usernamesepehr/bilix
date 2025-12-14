@@ -3,9 +3,9 @@
 namespace Modules\Flight\Imports;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Validators\Failure;
-use Maatwebsite\Excel\Validators\ValidationException;
 
 
 class FlightMultiSheetImport implements WithMultipleSheets {
@@ -25,7 +25,6 @@ class FlightMultiSheetImport implements WithMultipleSheets {
     public function __destruct()
     {
         if (!empty($this->failures)) {
-            // throw new ValidationException( $this->failures);
             throw ValidationException::withMessages($this->failures);
         }
 

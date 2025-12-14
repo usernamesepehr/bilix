@@ -3,13 +3,13 @@
 namespace Modules\Flight\Imports;
 
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Modules\Flight\Services\OptionsExcelHandlerService;
 
-use function Safe\ps_begin_page;
 
-class OptionsImport implements ToCollection, WithHeadingRow {
+class OptionsImport implements ToCollection, WithHeadingRow, SkipsEmptyRows {
 
     public function __construct(
         private array &$validated,

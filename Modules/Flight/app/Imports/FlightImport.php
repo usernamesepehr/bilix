@@ -4,12 +4,14 @@
 namespace Modules\Flight\Imports;
 
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Validators\Failure;
 use Modules\Flight\Services\FlightsExcelHandlerService;
 
-class FlightImport implements ToCollection, WithHeadingRow{
+class FlightImport implements ToCollection, WithHeadingRow, SkipsEmptyRows
+{
 
      public function __construct(
           private int $company_id,
@@ -18,6 +20,7 @@ class FlightImport implements ToCollection, WithHeadingRow{
      ) {}
      public function collection(Collection $rows) 
      {
+        dd($rows);
           foreach ($rows as $index => $row) {
                $rowNumber = $index + 2;
                $result = FlightsExcelHandlerService::Validator((array)$row);
